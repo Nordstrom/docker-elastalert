@@ -30,10 +30,17 @@ WORKDIR ${ELASTALERT_HOME}
 # Install Elastalert.
 RUN pip install setuptools && \
     pip install -r requirements.txt && \
+    pip install tzlocal && \
+    pip install datetime && \
     python ./setup.py install
 
 # Create rules directories. 
-RUN mkdir -p ${RULES_DIRECTORY} 
+RUN mkdir -p ${RULES_DIRECTORY} && \
+    mkdir -p elastalert/elastalert_modules
+
+COPY ./__init__.py elastalert/elastalert_modules/__init__.py
+COPY ./prometheus_alertmanager.py elastalert/elastalert_modules/prometheus_alertmanager.py
+
 # Define mount points.
 VOLUME [ "${RULES_DIRECTORY}" ]
 
