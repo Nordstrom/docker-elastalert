@@ -4,7 +4,7 @@ import warnings
 #import pprint
 import requests
 from elastalert.alerts import Alerter, BasicMatchString
-from util import elastalert_logger
+from elastalert.util import elastalert_logger
 from datetime import datetime
 from tzlocal import get_localzone # $ pip install tzlocal
 from requests.exceptions import RequestException
