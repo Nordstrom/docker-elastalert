@@ -5,10 +5,10 @@ import warnings
 import requests
 from elastalert.alerts import Alerter, BasicMatchString
 from elastalert.util import elastalert_logger
+from elastalert.util import EAException
 from datetime import datetime
 from tzlocal import get_localzone # $ pip install tzlocal
 from requests.exceptions import RequestException
-from util import EAException
 
 class PrometheusAlertManagerAlerter(Alerter):
 	required_options = frozenset(['alertmanager_url'])

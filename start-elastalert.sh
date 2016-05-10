@@ -29,7 +29,7 @@ done
 
 echo "Check if elasticsearch is reachable: '$elasticsearch_url'"
 # Wait until Elasticsearch is online since otherwise Elastalert will fail.
-until $(curl --output /dev/null --silent --head --fail $elasticsearch_url); do
+until $(curl --output /dev/null --silent --head --fail --connect-timeout 5 $elasticsearch_url); do
   echo "Waiting for Elasticsearch..."
   sleep 2
 done
