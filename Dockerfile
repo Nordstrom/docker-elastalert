@@ -56,5 +56,4 @@ COPY ./start-elastalert.sh start-elastalert.sh
 RUN chmod +x start-elastalert.sh
 
 # Launch Elastalert when a container is started.
-ENTRYPOINT [ "/opt/elastalert/start-elastalert.sh" ]
-CMD ["python", "-m", "elastalert.elastalert", "--config", "config.yaml", "--verbose"]
+ENTRYPOINT [ "/opt/elastalert/start-elastalert.sh", "python", "-m", "elastalert.elastalert", "--config", "config.yaml", "--verbose"]

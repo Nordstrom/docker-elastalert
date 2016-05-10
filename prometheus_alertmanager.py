@@ -3,7 +3,7 @@ import logging
 import warnings
 #import pprint
 import requests
-from alerts import Alerter, BasicMatchString
+from elastalert.alerts import Alerter, BasicMatchString
 from util import elastalert_logger
 from datetime import datetime
 from tzlocal import get_localzone # $ pip install tzlocal
