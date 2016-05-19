@@ -4,8 +4,6 @@ MAINTAINER Innovation Platform Team "invcldtm@nordstrom.com"
 
 # Elastalert home directory full path.
 ENV ELASTALERT_HOME /opt/elastalert
-# Elastalert rules directory.
-ENV RULES_DIRECTORY rules
 # Elastalert configuration file path in configuration directory.
 ENV ELASTALERT_CONFIG ${ELASTALERT_HOME}/config.yaml
 
@@ -40,9 +38,6 @@ RUN mkdir -p ${RULES_DIRECTORY} && \
 
 COPY ./__init__.py elastalert/elastalert_modules/__init__.py
 COPY ./prometheus_alertmanager.py elastalert/elastalert_modules/prometheus_alertmanager.py
-
-# Define mount points.
-VOLUME [ "${RULES_DIRECTORY}" ]
 
 # Copy example rule as elastalert exits on empty rules folder
 COPY ./example_rule.yaml ${RULES_DIRECTORY}/example_rule.yaml

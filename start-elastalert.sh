@@ -5,8 +5,8 @@ set -e
 : "${ELASTICSEARCH_HOST?Need to set environment variable 'ELASTICSEARCH_HOST'}"
 : "${ELASTICSEARCH_PORT?Need to set environment variable 'ELASTICSEARCH_PORT'}"
 : "${USE_SSL?Need to set environment variable 'USE_SSL'}"
+: "${RULES_DIRECTORY?Need to set environment variable 'RULES_DIRECTORY'}"
 
-rules_directory=${RULES_FOLDER:-rules}
 use_ssl=False
 elasticsearch_url="${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"
 
@@ -21,7 +21,7 @@ do
   cat $file | sed "s|es_host: [[:print:]]*|es_host: ${ELASTICSEARCH_HOST}|g" \
     | sed "s|es_port: [[:print:]]*|es_port: ${ELASTICSEARCH_PORT}|g" \
     | sed "s|use_ssl: [[:print:]]*|use_ssl: $use_ssl|g" \
-    | sed "s|rules_folder: [[:print:]]*|rules_folder: $rules_directory|g" \
+    | sed "s|rules_folder: [[:print:]]*|rules_folder: ${RULES_DIRECTORY}|g" \
     > config 
     cat config > $file
     rm config
