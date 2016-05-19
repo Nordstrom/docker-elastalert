@@ -6,6 +6,7 @@ ENV ELASTALERT_HOME /opt/elastalert
 # Elastalert configuration file path in configuration directory.
 ENV ELASTALERT_CONFIG ${ELASTALERT_HOME}/config.yaml
 
+
 # Install curl
 RUN apt-get update -y \
     && apt-get install -y \
@@ -30,10 +31,13 @@ RUN pip install setuptools && \
     pip install datetime && \
     python ./setup.py install
 
-# Copy prometheus alertmanager alerter. 
+# Copy prometheus_alertmanager alerter.
 RUN mkdir -p elastalert/elastalert_modules
 COPY ./__init__.py elastalert/elastalert_modules/__init__.py
 COPY ./prometheus_alertmanager.py elastalert/elastalert_modules/prometheus_alertmanager.py
+
+# Copy example_rule (used by start-elastalert.sh)
+COPY ./example_rule.yaml example_rule.yaml
 
 # Copy default configuration files to configuration directory.
 COPY ./config.yaml ${ELASTALERT_CONFIG}
