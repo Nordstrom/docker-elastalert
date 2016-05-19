@@ -3,11 +3,8 @@ MAINTAINER Innovation Platform Team "invcldtm@nordstrom.com"
 
 # Elastalert home directory full path.
 ENV ELASTALERT_HOME /opt/elastalert
-# Elastalert rules directory.
-ENV RULES_DIRECTORY rules
 # Elastalert configuration file path in configuration directory.
 ENV ELASTALERT_CONFIG ${ELASTALERT_HOME}/config.yaml
-
 
 # Install curl
 RUN apt-get update -y \
@@ -33,15 +30,10 @@ RUN pip install setuptools && \
     pip install datetime && \
     python ./setup.py install
 
-# Create rules directories. 
-RUN mkdir -p ${RULES_DIRECTORY} && \
-    mkdir -p elastalert/elastalert_modules
-
+# Copy prometheus alertmanager alerter. 
+RUN mkdir -p elastalert/elastalert_modules
 COPY ./__init__.py elastalert/elastalert_modules/__init__.py
 COPY ./prometheus_alertmanager.py elastalert/elastalert_modules/prometheus_alertmanager.py
-
-# Copy example rule as elastalert exits on empty rules folder
-COPY ./example_rule.yaml ${RULES_DIRECTORY}/example_rule.yaml
 
 # Copy default configuration files to configuration directory.
 COPY ./config.yaml ${ELASTALERT_CONFIG}

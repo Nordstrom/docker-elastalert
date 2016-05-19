@@ -15,6 +15,10 @@ if [ "${USE_SSL}"=="True" ] || [ "${USE_SSL}"=="true" ]; then
   use_ssl=True
 fi
 
+mkdir -p ${RULES_DIRECTORY}
+# Copy example_rule.yaml to rules directory because elastalert crashes if rules directory is empty
+cp ./example_rule.yaml ${RULES_DIRECTORY}/example_rule.yaml
+
 # Update config files
 for file in $(find . -name '*.yaml' -or -name '*.yml');
 do
