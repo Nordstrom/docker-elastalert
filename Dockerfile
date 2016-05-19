@@ -1,9 +1,10 @@
 FROM nordstrom/python:2.7
-
 MAINTAINER Innovation Platform Team "invcldtm@nordstrom.com"
 
 # Elastalert home directory full path.
 ENV ELASTALERT_HOME /opt/elastalert
+# Elastalert rules directory.
+ENV RULES_DIRECTORY rules
 # Elastalert configuration file path in configuration directory.
 ENV ELASTALERT_CONFIG ${ELASTALERT_HOME}/config.yaml
 
