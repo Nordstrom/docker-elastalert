@@ -37,6 +37,7 @@ class PrometheusAlertManagerAlerter(Alerter):
 			myalert['labels']['timestamp'] = match['@timestamp']
 			myalert['labels']['severity'] = self.rule.get('severity')
 			myalert['labels']['alertname'] = self.rule.get('name')
+			myalert['labels']['team'] = self.rule.get('team')
 			myalert['annotations'] = {}
 			myalert['annotations']['summary'] = "Log Matched: "+match['log']
 			myalert['annotations']['description'] = self.rule.get('description')
