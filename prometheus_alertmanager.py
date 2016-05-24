@@ -22,10 +22,8 @@ class PrometheusAlertManagerAlerter(Alerter):
 		for match in matches:
 			myalert = {}
 			myalert['labels'] = {}
-			#elastalert_logger.info("!! : %s" % pprint.pformat(match))
-			#elastalert_logger.info("?? : %s" % pprint.pformat(self.rule))
 
-			for key,val in match["kubernetes"].iteritems():
+			for key,val in match.get("kubernetes", []).iteritems():
 				if key != 'labels':
 					key = self.conform_key(key)
 					myalert['labels'][key]=val
@@ -33,6 +31,7 @@ class PrometheusAlertManagerAlerter(Alerter):
 					for key2,val2 in match["kubernetes"]["labels"].iteritems():
 						key2 = self.conform_key(key2)
 						myalert['labels'][key2]=val2
+
 			myalert['labels']['_index'] = match['_index']
 			myalert['labels']['timestamp'] = match['@timestamp']
 			myalert['labels']['severity'] = self.rule.get('severity')
