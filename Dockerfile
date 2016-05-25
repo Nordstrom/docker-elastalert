@@ -27,7 +27,6 @@ WORKDIR ${ELASTALERT_HOME}
 # Install Elastalert.
 RUN pip install setuptools && \
     pip install -r requirements.txt && \
-    pip install tzlocal && \
     pip install datetime && \
     python ./setup.py install
 
