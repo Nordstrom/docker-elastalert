@@ -31,12 +31,13 @@ do
     rm config
 done
 
-echo "Check if elasticsearch is reachable: '$elasticsearch_url'"
-# Wait until Elasticsearch is online since otherwise Elastalert will fail.
-until $(curl --output /dev/null --silent --head --fail --connect-timeout 5 $elasticsearch_url); do
-  echo "Waiting for Elasticsearch..."
-  sleep 2
-done
+# Commenting this out becuase without aws signing, this request will be forbidden due to access policy on AWS ES
+# echo "Check if elasticsearch is reachable: '$elasticsearch_url'"
+# # Wait until Elasticsearch is online since otherwise Elastalert will fail.
+# until $(curl --output /dev/null --silent --head --fail --connect-timeout 5 $elasticsearch_url); do
+#   echo "Waiting for Elasticsearch..."
+#   sleep 2
+# done
 
 # Check if the Elastalert index exists in Elasticsearch and create it if it does not.
 if ! $(curl --output /dev/null --silent --head --fail $elasticsearch_url/elastalert_status); then
