@@ -17,7 +17,7 @@ RUN apt-get update -y \
     musl-dev
 
 # Download and unpack Elastalert.
-RUN curl -L -o elastalert.zip https://github.com/Yelp/elastalert/archive/v0.0.85.zip && \
+RUN curl -L -o elastalert.zip https://github.com/Yelp/elastalert/archive/v0.0.81.zip && \
     unzip *.zip && \
     rm *.zip && \
     mv elast* ${ELASTALERT_HOME}
