@@ -22,6 +22,8 @@ es_port: 14900
 # Optional URL prefix for elasticsearch
 #es_url_prefix: elasticsearch
 
+aws_region: us-west-2
+
 # Connect with SSL to elasticsearch
 use_ssl: True
 
