@@ -13,3 +13,4 @@ description: "Dummy rule because elastalert crashes if rules folder is empty"
 severity: "warning"
 alert: "elastalert_modules.prometheus_alertmanager.PrometheusAlertManagerAlerter"
 alertmanager_url: "http://prometheus:9093/"
+aws_region: us-west-2
