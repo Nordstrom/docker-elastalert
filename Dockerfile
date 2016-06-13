@@ -24,6 +24,9 @@ RUN curl -L -o elastalert.zip https://github.com/Yelp/elastalert/archive/master.
 
 WORKDIR ${ELASTALERT_HOME}
 
+# Copy requirements.txt - elasticsearch and configparser version changed
+COPY ./requirements.txt requirements.txt
+
 # Install Elastalert.
 RUN pip install setuptools && \
     pip install -r requirements.txt && \
