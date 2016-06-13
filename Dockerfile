@@ -6,7 +6,6 @@ ENV ELASTALERT_HOME /opt/elastalert
 # Elastalert configuration file path in configuration directory.
 ENV ELASTALERT_CONFIG ${ELASTALERT_HOME}/config.yaml
 
-
 # Install curl
 RUN apt-get update -y \
     && apt-get install -y \
@@ -16,8 +15,9 @@ RUN apt-get update -y \
     gcc \ 
     musl-dev
 
+ARG ELASTALERT_VERSION
 # Download and unpack Elastalert.
-RUN curl -L -o elastalert.zip https://github.com/Yelp/elastalert/archive/v0.0.81.zip && \
+RUN curl -L -o elastalert.zip https://github.com/Yelp/elastalert/archive/v${ELASTALERT_VERSION}.zip && \
     unzip *.zip && \
     rm *.zip && \
     mv elast* ${ELASTALERT_HOME}
