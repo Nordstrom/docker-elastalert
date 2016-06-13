@@ -1,15 +1,15 @@
-name: "HelloWorld-LogEndpoint-Test"
+name: "Dummy"
 type: frequency
 index: platform4-*
-num_events: 1
+num_events: 100
 use_kibana4_dashboard: "/_plugin/kibana/#/dashboard"
 timeframe:
   hours: 2
 filter:
 - query:
     query_string:
-      query: "kubernetes.container_name: hello-world AND log: '//log called'"
-description: "Hello World logging endpoint called."
+      query: "kubernetes.container_name: dummy"
+description: "Dummy rule because elastalert crashes if rules folder is empty"
 severity: "warning"
 alert: "elastalert_modules.prometheus_alertmanager.PrometheusAlertManagerAlerter"
 alertmanager_url: "http://prometheus:9093/"
