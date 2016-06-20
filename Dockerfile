@@ -51,6 +51,8 @@ COPY ./start-elastalert.sh start-elastalert.sh
 
 # Make the start-script executable.
 RUN chmod +x start-elastalert.sh
+# Assign write permission to config file
+RUN chmod 666 ${ELASTALERT_CONFIG}
 
 USER ubuntu
 

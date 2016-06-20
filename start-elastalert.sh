@@ -20,16 +20,12 @@ mkdir -p ${RULES_DIRECTORY}
 cp ./example_rule.yaml ${RULES_DIRECTORY}/example_rule.yaml
 
 # Update config files
-for file in $(find . -name '*.yaml' -or -name '*.yml');
-do
-  cat $file | sed "s|es_host: [[:print:]]*|es_host: ${ELASTICSEARCH_HOST}|g" \
-    | sed "s|es_port: [[:print:]]*|es_port: ${ELASTICSEARCH_PORT}|g" \
-    | sed "s|use_ssl: [[:print:]]*|use_ssl: $use_ssl|g" \
-    | sed "s|rules_folder: [[:print:]]*|rules_folder: ${RULES_DIRECTORY}|g" \
-    > config 
-    cat config > $file
-    rm config
-done
+sed -e "s|es_host: [[:print:]]*|es_host: ${ELASTICSEARCH_HOST}|g" \
+    -e "s|es_port: [[:print:]]*|es_port: ${ELASTICSEARCH_PORT}|g" \
+    -e "s|use_ssl: [[:print:]]*|use_ssl: $use_ssl|g" \
+    -e "s|rules_folder: [[:print:]]*|rules_folder: ${RULES_DIRECTORY}|g" \
+    config.yaml > config.yaml
+
 
 # Commenting this out becuase without aws signing, this request will be forbidden due to access policy on AWS ES
 # echo "Check if elasticsearch is reachable: '$elasticsearch_url'"
