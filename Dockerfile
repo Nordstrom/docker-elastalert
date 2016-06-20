@@ -1,10 +1,12 @@
-FROM nordstrom/python:2.7
+FROM quay.io/nordstrom/python:2.7
 MAINTAINER Innovation Platform Team "invcldtm@nordstrom.com"
 
 # Elastalert home directory full path.
 ENV ELASTALERT_HOME /opt/elastalert
 # Elastalert configuration file path in configuration directory.
 ENV ELASTALERT_CONFIG ${ELASTALERT_HOME}/config.yaml
+
+USER root 
 
 # Install curl
 RUN apt-get update -y \
@@ -28,7 +30,8 @@ WORKDIR ${ELASTALERT_HOME}
 COPY ./requirements.txt requirements.txt
 
 # Install Elastalert.
-RUN pip install setuptools && \
+RUN pip install --upgrade pip && \
+    pip install setuptools && \
     pip install -r requirements.txt && \
     pip install datetime && \
     python ./setup.py install
@@ -48,6 +51,8 @@ COPY ./start-elastalert.sh start-elastalert.sh
 
 # Make the start-script executable.
 RUN chmod +x start-elastalert.sh
+
+USER ubuntu
 
 # Launch Elastalert when a container is started.
 ENTRYPOINT [ "/opt/elastalert/start-elastalert.sh", "python", "-m", "elastalert.elastalert", "--config", "config.yaml", "--verbose"]
