@@ -1,6 +1,6 @@
 # This is the folder that contains the rule yaml files
 # Any .yaml file will be loaded as a rule
-rules_folder: example_rules
+rules_folder: #{RULES_FOLDER}
 
 # How often ElastAlert will query elasticsearch
 # The unit can be anything from weeks to seconds
@@ -14,10 +14,10 @@ buffer_time:
 
 # The elasticsearch hostname for metadata writeback
 # Note that every rule can have it's own elasticsearch host
-es_host: elasticsearch.example.com
+es_host: #{ES_HOST}
 
 # The elasticsearch port
-es_port: 14900
+es_port: #{ES_PORT}
 
 # Optional URL prefix for elasticsearch
 #es_url_prefix: elasticsearch
@@ -25,7 +25,7 @@ es_port: 14900
 aws_region: us-west-2
 
 # Connect with SSL to elasticsearch
-use_ssl: True
+use_ssl: #{USE_SSL}
 
 # Option basic-auth username and password for elasticsearch
 #es_username: someusername

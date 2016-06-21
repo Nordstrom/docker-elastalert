@@ -3,8 +3,6 @@ MAINTAINER Innovation Platform Team "invcldtm@nordstrom.com"
 
 # Elastalert home directory full path.
 ENV ELASTALERT_HOME /opt/elastalert
-# Elastalert configuration file path in configuration directory.
-ENV ELASTALERT_CONFIG ${ELASTALERT_HOME}/config.yaml
 
 USER root 
 
@@ -45,14 +43,14 @@ COPY ./prometheus_alertmanager.py elastalert/elastalert_modules/prometheus_alert
 COPY ./example_rule.yaml example_rule.yaml
 
 # Copy default configuration files to configuration directory.
-COPY ./config.yaml ${ELASTALERT_CONFIG}
+COPY ./config.yaml.tmpl config.yaml.tmpl
 # Copy the script used to launch the Elastalert when a container is started.
 COPY ./start-elastalert.sh start-elastalert.sh
 
 # Make the start-script executable.
 RUN chmod +x start-elastalert.sh
 # Assign write permission to config file
-RUN chmod 666 ${ELASTALERT_CONFIG}
+RUN chmod 777 ${ELASTALERT_HOME} 
 
 USER ubuntu
 
