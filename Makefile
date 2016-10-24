@@ -1,6 +1,6 @@
 container_name := elastalert
 container_registry := quay.io/nordstrom
-elastalert_version := 0.0.95
+elastalert_version := 0.1.2
 container_release := $(elastalert_version)
 
 .PHONY: build/image tag/image push/image
