@@ -31,8 +31,8 @@ RUN pip install --upgrade pip \
 
 # Copy prometheus_alertmanager alerter.
 RUN mkdir -p /elastalert/elastalert/elastalert_modules
-COPY __init__.py /elastalert/elastalert/elastalert_modules/__init__.py
-COPY prometheus_alertmanager.py /elastalert/elastalert/elastalert_modules/prometheus_alertmanager.py
+COPY elastalert_modules/__init__.py /elastalert/elastalert/elastalert_modules/__init__.py
+COPY elastalert_modules/prometheus_alertmanager.py /elastalert/elastalert/elastalert_modules/prometheus_alertmanager.py
 
 # Copy example_rule (used by start-elastalert.sh)
 COPY config/example_rule.yaml /elastalert/example_rule.yaml
