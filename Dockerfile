@@ -20,7 +20,7 @@ RUN curl -L -o /tmp/elastalert.zip https://github.com/Yelp/elastalert/archive/v$
 WORKDIR /elastalert
 
 # Copy requirements.txt - elasticsearch and configparser version changed
-COPY requirements.txt /tmp/requirements.txt
+COPY config/requirements.txt /tmp/requirements.txt
 
 # Install Elastalert.
 RUN pip install --upgrade pip \
@@ -35,12 +35,12 @@ COPY __init__.py /elastalert/elastalert/elastalert_modules/__init__.py
 COPY prometheus_alertmanager.py /elastalert/elastalert/elastalert_modules/prometheus_alertmanager.py
 
 # Copy example_rule (used by start-elastalert.sh)
-COPY example_rule.yaml /elastalert/example_rule.yaml
+COPY config/example_rule.yaml /elastalert/example_rule.yaml
 
 # Copy default configuration files to configuration directory.
-COPY config.yaml.tmpl /elastalert/config.yaml.tmpl
+COPY config/config.yaml.tmpl /elastalert/config.yaml.tmpl
 # Copy the script used to launch the Elastalert when a container is started.
-COPY start-elastalert.sh /elastalert/start-elastalert.sh
+COPY config/start-elastalert.sh /elastalert/start-elastalert.sh
 
 # Make the start-script executable.
 RUN chmod +x /elastalert/start-elastalert.sh
