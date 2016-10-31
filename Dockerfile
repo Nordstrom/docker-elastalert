@@ -1,9 +1,6 @@
 FROM quay.io/nordstrom/python:2.7
 MAINTAINER Innovation Platform Team "invcldtm@nordstrom.com"
 
-# Elastalert home directory full path.
-ENV ELASTALERT_HOME /opt/elastalert
-
 USER root 
 
 RUN apt-get update -qy \
@@ -17,10 +14,10 @@ ARG ELASTALERT_VERSION
 RUN curl -L -o /tmp/elastalert.zip https://github.com/Yelp/elastalert/archive/v${ELASTALERT_VERSION}.zip \
  && unzip -d /tmp /tmp/elastalert.zip \
  && rm /tmp/elastalert.zip \
- && mv /tmp/elastalert-${ELASTALERT_VERSION} ${ELASTALERT_HOME} \
- && mv ${ELASTALERT_HOME}/config.yaml.example ${ELASTALERT_HOME}/config.yaml
+ && mv /tmp/elastalert-${ELASTALERT_VERSION} /elastalert \
+ && mv /elastalert/config.yaml.example /elastalert/config.yaml
 
-WORKDIR ${ELASTALERT_HOME}
+WORKDIR /elastalert
 
 # Copy requirements.txt - elasticsearch and configparser version changed
 COPY requirements.txt /tmp/requirements.txt
@@ -30,25 +27,25 @@ RUN pip install --upgrade pip \
  && pip install setuptools \
  && pip install -r /tmp/requirements.txt \
  && pip install datetime \
- && python ${ELASTALERT_HOME}/setup.py install
+ && python /elastalert/setup.py install
 
 # Copy prometheus_alertmanager alerter.
-RUN mkdir -p ${ELASTALERT_HOME}/elastalert/elastalert_modules
-COPY __init__.py ${ELASTALERT_HOME}/elastalert/elastalert_modules/__init__.py
-COPY prometheus_alertmanager.py ${ELASTALERT_HOME}/elastalert/elastalert_modules/prometheus_alertmanager.py
+RUN mkdir -p /elastalert/elastalert/elastalert_modules
+COPY __init__.py /elastalert/elastalert/elastalert_modules/__init__.py
+COPY prometheus_alertmanager.py /elastalert/elastalert/elastalert_modules/prometheus_alertmanager.py
 
 # Copy example_rule (used by start-elastalert.sh)
-COPY example_rule.yaml ${ELASTALERT_HOME}/example_rule.yaml
+COPY example_rule.yaml /elastalert/example_rule.yaml
 
 # Copy default configuration files to configuration directory.
-COPY config.yaml.tmpl ${ELASTALERT_HOME}/config.yaml.tmpl
+COPY config.yaml.tmpl /elastalert/config.yaml.tmpl
 # Copy the script used to launch the Elastalert when a container is started.
-COPY start-elastalert.sh ${ELASTALERT_HOME}/start-elastalert.sh
+COPY start-elastalert.sh /elastalert/start-elastalert.sh
 
 # Make the start-script executable.
-RUN chmod +x ${ELASTALERT_HOME}/start-elastalert.sh
+RUN chmod +x /elastalert/start-elastalert.sh
 # Assign write permission to config file
-RUN chmod 777 ${ELASTALERT_HOME} 
+RUN chmod 777 /elastalert 
 
 USER ubuntu
 
