@@ -14,38 +14,39 @@ RUN apt-get update -qy \
 
 ARG ELASTALERT_VERSION
 # Download and unpack Elastalert.
-RUN curl -L -o elastalert.zip https://github.com/Yelp/elastalert/archive/v${ELASTALERT_VERSION}.zip \
- && unzip *.zip \
- && rm *.zip \
- && mv elast* ${ELASTALERT_HOME}
+RUN curl -L -o /tmp/elastalert.zip https://github.com/Yelp/elastalert/archive/v${ELASTALERT_VERSION}.zip \
+ && unzip -d /tmp /tmp/elastalert.zip \
+ && rm /tmp/elastalert.zip \
+ && mv /tmp/elastalert-${ELASTALERT_VERSION} ${ELASTALERT_HOME} \
+ && mv ${ELASTALERT_HOME}/config.yaml.example ${ELASTALERT_HOME}/config.yaml
 
 WORKDIR ${ELASTALERT_HOME}
 
 # Copy requirements.txt - elasticsearch and configparser version changed
-COPY ./requirements.txt requirements.txt
+COPY requirements.txt /tmp/requirements.txt
 
 # Install Elastalert.
 RUN pip install --upgrade pip \
  && pip install setuptools \
- && pip install -r requirements.txt \
+ && pip install -r /tmp/requirements.txt \
  && pip install datetime \
- && python ./setup.py install
+ && python ${ELASTALERT_HOME}/setup.py install
 
 # Copy prometheus_alertmanager alerter.
-RUN mkdir -p elastalert/elastalert_modules
-COPY ./__init__.py elastalert/elastalert_modules/__init__.py
-COPY ./prometheus_alertmanager.py elastalert/elastalert_modules/prometheus_alertmanager.py
+RUN mkdir -p ${ELASTALERT_HOME}/elastalert/elastalert_modules
+COPY __init__.py ${ELASTALERT_HOME}/elastalert/elastalert_modules/__init__.py
+COPY prometheus_alertmanager.py ${ELASTALERT_HOME}/elastalert/elastalert_modules/prometheus_alertmanager.py
 
 # Copy example_rule (used by start-elastalert.sh)
-COPY ./example_rule.yaml example_rule.yaml
+COPY example_rule.yaml ${ELASTALERT_HOME}/example_rule.yaml
 
 # Copy default configuration files to configuration directory.
-COPY ./config.yaml.tmpl config.yaml.tmpl
+COPY config.yaml.tmpl ${ELASTALERT_HOME}/config.yaml.tmpl
 # Copy the script used to launch the Elastalert when a container is started.
-COPY ./start-elastalert.sh start-elastalert.sh
+COPY start-elastalert.sh ${ELASTALERT_HOME}/start-elastalert.sh
 
 # Make the start-script executable.
-RUN chmod +x start-elastalert.sh
+RUN chmod +x ${ELASTALERT_HOME}/start-elastalert.sh
 # Assign write permission to config file
 RUN chmod 777 ${ELASTALERT_HOME} 
 
