@@ -14,10 +14,10 @@ RUN apt-get update -qy \
 
 ARG ELASTALERT_VERSION
 # Download and unpack Elastalert.
-RUN curl -L -o elastalert.zip https://github.com/Yelp/elastalert/archive/v${ELASTALERT_VERSION}.zip && \
-    unzip *.zip && \
-    rm *.zip && \
-    mv elast* ${ELASTALERT_HOME}
+RUN curl -L -o elastalert.zip https://github.com/Yelp/elastalert/archive/v${ELASTALERT_VERSION}.zip \
+ && unzip *.zip \
+ && rm *.zip \
+ && mv elast* ${ELASTALERT_HOME}
 
 WORKDIR ${ELASTALERT_HOME}
 
@@ -25,11 +25,11 @@ WORKDIR ${ELASTALERT_HOME}
 COPY ./requirements.txt requirements.txt
 
 # Install Elastalert.
-RUN pip install --upgrade pip && \
-    pip install setuptools && \
-    pip install -r requirements.txt && \
-    pip install datetime && \
-    python ./setup.py install
+RUN pip install --upgrade pip \
+ && pip install setuptools \
+ && pip install -r requirements.txt \
+ && pip install datetime \
+ && python ./setup.py install
 
 # Copy prometheus_alertmanager alerter.
 RUN mkdir -p elastalert/elastalert_modules
