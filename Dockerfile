@@ -23,8 +23,7 @@ WORKDIR /elastalert
 COPY config/requirements.txt /tmp/requirements.txt
 
 # Install Elastalert.
-RUN pip install --upgrade pip \
- && pip install setuptools \
+RUN pip install setuptools \
  && pip install -r /tmp/requirements.txt \
  && pip install datetime \
  && python /elastalert/setup.py install
