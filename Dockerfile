@@ -6,14 +6,11 @@ ENV ELASTALERT_HOME /opt/elastalert
 
 USER root 
 
-# Install curl
-RUN apt-get update -y \
-    && apt-get install -y \
-    curl \
-    unzip \ 
-    python-dev \
-    gcc \ 
-    musl-dev
+RUN apt-get update -qy \
+ && apt-get install -qy \
+      unzip \ 
+      python-dev \
+      gcc
 
 ARG ELASTALERT_VERSION
 # Download and unpack Elastalert.
