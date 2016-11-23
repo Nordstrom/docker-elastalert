@@ -1,7 +1,7 @@
 image_name := elastalert
 image_registry := quay.io/nordstrom
-elastalert_version := 0.1.3
-image_release := $(elastalert_version)
+elastalert_version := 0.1.4
+image_release := $(elastalert_version)-1
 
 build_args := --build-arg ELASTALERT_VERSION=$(elastalert_version)
 

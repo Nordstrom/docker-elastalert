@@ -20,14 +20,13 @@ RUN curl -L -o /tmp/elastalert.zip https://github.com/Yelp/elastalert/archive/v$
 COPY config/ /elastalert/
 
 # Copy requirements.txt - elasticsearch and configparser version changed
-RUN pip install setuptools \
+RUN pip install --upgrade pip \
+ && pip install setuptools \
  && pip install -r /elastalert/requirements.txt \
  && pip install datetime \
  && python /elastalert/setup.py install
 
 COPY elastalert_modules /elastalert/elastalert/elastalert_modules
-
-RUN chmod +x /elastalert/start-elastalert.sh
 
 RUN chown -R ubuntu /elastalert \
  && chmod 777 /elastalert
