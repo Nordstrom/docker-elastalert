@@ -17,7 +17,7 @@ requests==2.20.0
 requests-oauthlib==0.4.2
 simplejson==3.6.5
 six==1.9.0
-supervisor==3.1.2
+supervisor==3.1.4
 texttable==0.8.4
 tlslite==0.4.8
 unittest2==0.8.0
